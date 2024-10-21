@@ -10,4 +10,8 @@ spring:
       hibernate:
         format_sql: true   # 쿼리를 보기 좋게 출력
 
-
+  datasource:
+    url: jdbc:mysql://localhost:3306/co_mu_nity
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: # 본인 pc mysql 계정
+    password: # 본인 pc mysql pw
