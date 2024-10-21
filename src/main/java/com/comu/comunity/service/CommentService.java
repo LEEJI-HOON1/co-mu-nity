@@ -1,10 +1,12 @@
 package com.comu.comunity.service;
 
-import com.comu.comunity.dto.CommentRequestDto;
 import com.comu.comunity.dto.CommentResponseDto;
+import com.comu.comunity.dto.CommentRequestDto;
 import com.comu.comunity.model.entity.Comment;
 import com.comu.comunity.repository.CommentRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -30,6 +32,12 @@ public class CommentService {
         return commentResponseDto;
 
     }
+
+    public List<CommentResponseDto> getComment() {
+        // DB 조회
+        return commentRepository.findAll().stream().map(CommentResponseDto::new).toList();
+    }
+
 
 
 }
