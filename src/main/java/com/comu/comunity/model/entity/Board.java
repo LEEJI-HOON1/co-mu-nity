@@ -38,6 +38,7 @@ public class Board extends BaseEntity {
     }
 
     private void initData(BoardRequestDto boardRequestDto) {
+        this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
 
@@ -52,6 +53,7 @@ public class Board extends BaseEntity {
     }
 
     public void updateData(BoardRequestDto boardRequestDto) {
+        this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
 }
