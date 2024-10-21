@@ -1,13 +1,11 @@
 package com.comu.comunity.controller;
 
+import com.comu.comunity.dto.MemberRequestDto;
 import com.comu.comunity.dto.MemberResponseDto;
 import com.comu.comunity.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/members")
@@ -20,5 +18,12 @@ public class MemberController {
     public ResponseEntity<MemberResponseDto> getMemberProfile(@PathVariable Long id) {
         MemberResponseDto memberResponseDto = memberService.getMemberProfile(id);
         return ResponseEntity.ok(memberResponseDto);
+    }
+
+    // 사용자 정보 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateMemberProfile(@PathVariable Long id, @RequestBody MemberRequestDto memberRequestDto) {
+        memberService.updateMemberProfile(id, memberRequestDto);
+        return ResponseEntity.ok("수정을 완료했습니다.");
     }
 }
