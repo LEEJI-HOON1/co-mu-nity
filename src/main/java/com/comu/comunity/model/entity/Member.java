@@ -23,7 +23,7 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "birth_day", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true)
