@@ -5,6 +5,7 @@ import com.comu.comunity.dto.CommentRequestDto;
 import com.comu.comunity.model.entity.Comment;
 import com.comu.comunity.repository.CommentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,21 @@ public class CommentService {
         return commentRepository.findAll().stream().map(CommentResponseDto::new).toList();
     }
 
+    @Transactional
+    
+    public Long updateComment(Long commentId, CommentRequestDto requestDto){
+        //해당 댓글이 DB에 존재하는지 확인
+        Comment comment = findComment(commentId);
+        //댓글 내용 수정
+        comment.update(requestDto);
+        
+        return commentId;
+        
+    }
 
+
+
+    private Comment findComment(Long commentId) {
+    }
 
 }
