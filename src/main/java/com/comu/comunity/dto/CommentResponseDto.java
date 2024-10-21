@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class CommentResponseDto {
     private Long id;
     private String name;
-    private String content;
+    private String contents;
     private LocalDateTime createDate;
     private  LocalDateTime updateDate;
 
