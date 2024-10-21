@@ -20,7 +20,7 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "memberId")
+    @Column(name = "member_id")
     private Long memberId;
 
     @Column(name = "contents")
