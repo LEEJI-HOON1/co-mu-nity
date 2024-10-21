@@ -39,4 +39,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
      */
+
+    public void updateProfile(String name, String email, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+    }
 }
