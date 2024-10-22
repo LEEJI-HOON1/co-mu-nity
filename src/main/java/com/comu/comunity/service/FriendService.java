@@ -18,7 +18,7 @@ public class FriendService {
     // Todo
     //  토큰생성시, fromMemberId는 로그인한 사용자로 변경해야함
     // fromMember가 toMember 팔로우
-    public String follow(Long fromMemberId, Long toMemberId) {
+    public Friend follow(Long fromMemberId, Long toMemberId) {
         // 자기 자신 팔로우 안됨
         if (fromMemberId.equals(toMemberId)) {
             throw new RuntimeException("자기 자신을 follow 할 수 없습니다.");
@@ -31,8 +31,7 @@ public class FriendService {
         Member toMember = memberRepository.findById(toMemberId).orElseThrow(RuntimeException::new);
 
         Friend friend = new Friend(fromMember, toMember);
-        friendRepository.save(friend);
-        return "Follow successful";
+        return friendRepository.save(friend);
     }
 
     // 팔로우중인지 확인하기
