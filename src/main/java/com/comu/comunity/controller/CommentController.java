@@ -3,39 +3,52 @@ package com.comu.comunity.controller;
 import com.comu.comunity.dto.CommentRequestDto;
 import com.comu.comunity.dto.CommentResponseDto;
 import com.comu.comunity.service.CommentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
+
 public class CommentController {
 
     private  final CommentService commentService;
 
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;}
 
 
     @PostMapping("/comments")
-    public CommentResponseDto createComment (@RequestBody CommentRequestDto requestDto){
-        //현재 로그인한 사용자의 정보를 가져옴
-        return commentService.createComment(requestDto);
+    public ResponseEntity<CommentResponseDto> createComment (@RequestBody CommentRequestDto requestDto){
+        CommentResponseDto responseDto = commentService.createComment(requestDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
 
-    @GetMapping("/comments/{id}")
-    public List<CommentResponseDto> getComment() { return commentService.getComment(); }
+    @GetMapping("/boards/{boardId}/comments")
+    public ResponseEntity<List<CommentResponseDto>> getComment(@PathVariable Long boardId ) {
+        List<CommentResponseDto> responseDtoList = commentService.getComment(boardId);
 
 
-    @PutMapping("/comments/{id}")
-    public Long updateComment(@PathVariable(value = "id") Long id, @RequestBody CommentRequestDto requestDto){
-        return commentService.updateComment(id, requestDto);
+        return ResponseEntity.ok().body(responseDtoList);
+
     }
 
-    @DeleteMapping("/comments/{id}")
-    public Long deleteComment(@PathVariable(value = "id") Long id){
-        return commentService.deleteComment(id);
+
+    @PutMapping("/boards/{boardId}/comments/{commentId}")
+    public ResponseEntity<Long> updateComment(@PathVariable(value = "commentId") Long commentId, @RequestBody CommentRequestDto requestDto){
+        Long updatedCommentId = commentService.updateComment(commentId, requestDto);
+        return ResponseEntity.ok(updatedCommentId);
+    }
+
+    @DeleteMapping("/boards/{boardId}/comments/{commentId}")
+    public ResponseEntity<Long> deleteComment(@PathVariable(value = "commentId") Long commentId) {
+        Long deletedCommentId = commentService.deleteComment(commentId);
+
+        return ResponseEntity.ok(deletedCommentId);
 
     }
 }
