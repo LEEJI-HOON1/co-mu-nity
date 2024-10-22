@@ -24,16 +24,16 @@ public class CommentController {
     }
 
 
-    @GetMapping("/comments/{commentId}")
+    @GetMapping("/comments/{id}")
     public List<CommentResponseDto> getComment() { return commentService.getComment(); }
 
 
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("/comments/{id}")
     public Long updateComment(@PathVariable(value = "id") Long id, @RequestBody CommentRequestDto requestDto){
         return commentService.updateComment(id, requestDto);
     }
 
-    @DeleteMapping("/comments/commentId")
+    @DeleteMapping("/comments/{id}")
     public Long deleteComment(@PathVariable(value = "id") Long id){
         return commentService.deleteComment(id);
 
