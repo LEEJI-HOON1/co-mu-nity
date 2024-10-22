@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/boards/{boardId}")
+@RequestMapping("/api")
 public class CommentController {
 
     private  final CommentService commentService;
@@ -29,13 +29,13 @@ public class CommentController {
 
 
     @PutMapping("/comments/{commentId}")
-    public Long updateComment(@PathVariable(value = "Id") Long Id, @RequestBody CommentRequestDto requestDto){
-        return commentService.updateComment(Id, requestDto);
+    public Long updateComment(@PathVariable(value = "id") Long id, @RequestBody CommentRequestDto requestDto){
+        return commentService.updateComment(id, requestDto);
     }
 
     @DeleteMapping("/comments/commentId")
-    public Long deleteComment(@PathVariable(value = "Id") Long Id){
-        return commentService.deleteComment(Id);
+    public Long deleteComment(@PathVariable(value = "id") Long id){
+        return commentService.deleteComment(id);
 
     }
 }
