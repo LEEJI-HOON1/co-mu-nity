@@ -1,11 +1,15 @@
 package com.comu.comunity.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
-public class MemberResponseDto { // 조회 결과 -> 클라이언트에 반환
+@Setter
+@NoArgsConstructor
+public class MemberResponseDto {
     private Long id;
     private String name;
     private String email;
