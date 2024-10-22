@@ -29,7 +29,7 @@ public class Friend extends BaseEntity {
     private String status;
 
     public Friend(Member fromMember, Member toMember) {
-        this.toMember = fromMember;
-        this.fromMember = toMember;
+        this.fromMember = fromMember;
+        this.toMember = toMember;
     }
 }
