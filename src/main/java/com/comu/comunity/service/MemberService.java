@@ -27,8 +27,7 @@ public class MemberService {
     public void updateMember(Long id, MemberRequestDto memberRequestDto) {
         Member member = memberRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
-
-        // 비밀번호 관련 로직은 JWT 토큰 및 PasswordEncoder에
+        member.updateProfile(memberRequestDto.getName(), memberRequestDto.getEmail(), memberRequestDto.getBirthDate());
     }
 
     @Transactional
