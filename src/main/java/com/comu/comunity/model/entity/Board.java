@@ -24,9 +24,6 @@ public class Board extends BaseEntity {
 
     @Column(name = "member_id")
     private Long memberId;
-//    @ManyToOne
-//    @JoinColumn(name="member_id")
-//    private Member member;
 
     @Column(name = "name")
     private String name;
@@ -48,6 +45,7 @@ public class Board extends BaseEntity {
     public BoardResponseDto to() {
         return new BoardResponseDto(
                 id,
+                memberId,
                 name,
                 contents,
 //                comments.stream().map(Comment::to).toList(),
