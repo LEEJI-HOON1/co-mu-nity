@@ -2,11 +2,17 @@ package com.comu.comunity.service;
 
 import com.comu.comunity.dto.BoardRequestDto;
 import com.comu.comunity.dto.BoardResponseDto;
+import com.comu.comunity.dto.BoardResponsePage;
 import com.comu.comunity.model.entity.Board;
 import com.comu.comunity.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +45,11 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    public BoardResponsePage getBoardListWithPaging(int page, int size, String criteria){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, criteria));
+        Page<Board> boards = boardRepository.findAll(pageable);
+        return new BoardResponsePage(boards);
+    }
     //게시글 선택 조회
     public BoardResponseDto getBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Board not fount with id"+id));

@@ -3,9 +3,9 @@ package com.comu.comunity.controller;
 import com.comu.comunity.dto.BoardRequestDto;
 import com.comu.comunity.dto.BoardResponseDto;
 import com.comu.comunity.service.BoardService;
+import com.comu.comunity.dto.BoardResponsePage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +27,12 @@ public class BoardController {
     }
     //게시글 전체조회
     @GetMapping()
-    public ResponseEntity<List<BoardResponseDto>> getBoardList(@RequestParam(required = false, defaultValue = "0") int page,
-                                                               @RequestParam(required = false, defaultValue = "10") int size,
-                                                               @RequestParam(required = false, defaultValue = "updateDate") String criteria) {
+    public ResponseEntity<BoardResponsePage> getBoardList(@RequestParam(name="page", required = false, defaultValue = "0") int page,
+                                                               @RequestParam(name="size", required = false, defaultValue = "10") int size,
+                                                               @RequestParam(name="criteria", required = false, defaultValue = "updateDate") String criteria) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(boardService.getBoardList());
+                .body(boardService.getBoardListWithPaging(page, size, criteria));
     }
     //게시글 상세조회
     @GetMapping("/{id}")
