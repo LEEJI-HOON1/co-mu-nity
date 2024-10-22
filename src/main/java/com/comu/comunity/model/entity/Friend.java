@@ -14,15 +14,20 @@ public class Friend extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "follow_id")
     private Long id;
 
-    @Column(name = "followeeId")
-    private Long followeeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "followee_id")
+    private Member followee;
 
-    @Column(name = "followerId")
-    private Long followerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "followerId")
+    private Member follower;
 
     @Column
     private String status;
+
+
 
 }
