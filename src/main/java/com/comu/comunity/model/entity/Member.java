@@ -3,10 +3,11 @@ package com.comu.comunity.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-
+@Setter
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date" )
     private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true)
