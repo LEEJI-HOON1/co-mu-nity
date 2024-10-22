@@ -23,7 +23,7 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "birth_day", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -39,4 +39,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
      */
+
+    public void updateProfile(String name, String email, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+    }
 }
