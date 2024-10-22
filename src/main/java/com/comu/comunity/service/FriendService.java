@@ -1,5 +1,6 @@
 package com.comu.comunity.service;
 
+import com.comu.comunity.dto.FriendResponseDto;
 import com.comu.comunity.dto.MemberResponseDto;
 import com.comu.comunity.model.entity.Friend;
 import com.comu.comunity.model.entity.Member;
@@ -23,7 +24,7 @@ public class FriendService {
     //  토큰생성시, fromMemberId는 로그인한 사용자로 변경해야함
     // fromMember가 toMember 팔로우
     @Transactional
-    public Friend follow(Long fromMemberId, Long toMemberId) {
+    public FriendResponseDto follow(Long fromMemberId, Long toMemberId) {
         // 자기 자신 팔로우 안됨
         if (fromMemberId.equals(toMemberId)) {
             throw new RuntimeException("자기 자신을 follow 할 수 없습니다.");
@@ -35,10 +36,9 @@ public class FriendService {
         Member fromMember = memberRepository.findById(fromMemberId).orElseThrow(RuntimeException::new);
         Member toMember = memberRepository.findById(toMemberId).orElseThrow(RuntimeException::new);
 
-
-
         Friend friend = new Friend(fromMember, toMember);
-        return friendRepository.save(friend);
+        friendRepository.save(friend);
+        return new FriendResponseDto(friend.getId(), fromMemberId, toMemberId);
     }
 
     public List<MemberResponseDto> getFollowings(Long fromMemberId) {
@@ -63,6 +63,19 @@ public class FriendService {
         return followers.stream()
                 .map(friend -> new MemberResponseDto(friend.getFromMember().getId(), friend.getFromMember().getName()))
                 .collect(Collectors.toList());
+    }
+
+    public FriendResponseDto unfollow(Long fromMemberId, Long toMemberId) {
+        if (fromMemberId.equals(toMemberId)) {
+            throw new RuntimeException("자기 자신을 unfollow 할 수 없습니다");
+        }
+        // 팔로우 관계 조회
+        Friend friend = friendRepository.findByFromMemberIdAndToMemberId(fromMemberId, toMemberId)
+                .orElseThrow(() -> new IllegalArgumentException("팔로우가 되어 있지 않습니다."));
+
+       friendRepository.delete(friend);
+       return new FriendResponseDto(friend.getId(), fromMemberId, toMemberId);
+
     }
 
     // 팔로우중인지 확인하기
