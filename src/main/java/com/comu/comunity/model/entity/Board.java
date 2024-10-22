@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@Getter
 @Table(name = "board")
 public class Board extends BaseEntity {
 
@@ -47,6 +48,7 @@ public class Board extends BaseEntity {
                 id,
                 name,
                 contents,
+//                comments.stream().map(Comment::to).toList(),
                 getCreateDate(),
                 getUpdateDate()
         );

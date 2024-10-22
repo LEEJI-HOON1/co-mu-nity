@@ -35,23 +35,23 @@ public class BoardController {
                 .body(boardService.getBoardList());
     }
     //게시글 상세조회
-    @GetMapping("{id}")
-    public ResponseEntity<BoardResponseDto> getBoard(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardResponseDto> getBoard(@PathVariable(name="id") Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(boardService.getBoard(id));
     }
     //게시글 수정
-    @PutMapping("{id}")
-    public ResponseEntity<Void> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardRequestDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateBoard(@PathVariable(name="id") Long id, @RequestBody BoardRequestDto boardRequestDto) {
         boardService.updateBoard(id, boardRequestDto);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
     //게시글 삭제
-    @DeleteMapping("{id}")
-    public ResponseEntity<BoardResponseDto> deleteBoard(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BoardResponseDto> deleteBoard(@PathVariable(name="id") Long id) {
         boardService.deleteBoard(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
