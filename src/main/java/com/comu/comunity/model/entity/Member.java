@@ -25,8 +25,8 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "birth", nullable = false)
-    private LocalDate birth;
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -41,6 +41,12 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
      */
+
+    public void updateProfile(String name, String email, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+    }
 
     // A의 팔로워목록조회라서, A가 팔로우하는 followee 필드
     @OneToMany(mappedBy = "followee")
