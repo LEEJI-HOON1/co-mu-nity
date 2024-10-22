@@ -1,5 +1,6 @@
 package com.comu.comunity.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ public class MemberRequestDto {
     private String name;
     private String email;
     private LocalDate birthDate;
-//    비밀번호 관련 예시
+    //    비밀번호 관련 예시
     private String password;
+
 }
