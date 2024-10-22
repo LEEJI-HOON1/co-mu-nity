@@ -4,6 +4,7 @@ import com.comu.comunity.dto.BoardRequestDto;
 import com.comu.comunity.dto.BoardResponseDto;
 import com.comu.comunity.service.BoardService;
 import com.comu.comunity.dto.BoardResponsePage;
+import com.comu.comunity.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final MemberService memberService;
 
     //게시글 생성
     @PostMapping()

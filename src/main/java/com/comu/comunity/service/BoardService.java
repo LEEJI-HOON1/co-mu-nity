@@ -5,6 +5,7 @@ import com.comu.comunity.dto.BoardResponseDto;
 import com.comu.comunity.dto.BoardResponsePage;
 import com.comu.comunity.model.entity.Board;
 import com.comu.comunity.repository.BoardRepository;
+import com.comu.comunity.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-
+    private final MemberRepository memberRepository;
 
 
     @Transactional
