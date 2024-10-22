@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class MemberResponseDto {
+public class MemberResponseDto { // 조회 결과 -> 클라이언트에 반환
     private Long id;
     private String name;
     private String email;
