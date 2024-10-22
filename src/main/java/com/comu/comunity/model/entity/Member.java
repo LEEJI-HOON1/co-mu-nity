@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+
 @Setter
 @Entity
 @Getter
@@ -24,22 +24,11 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "birth_date" )
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-
-
-    /* 게시글과의 연관관계 설정 예시
-    @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
-    private List<Board> boards = new ArrayList<>();
-     */
-
-    /* 댓글과의 연관관계 설정 예시
-    @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-     */
 
     public void updateProfile(String name, String email, LocalDate birthDate) {
         this.name = name;
