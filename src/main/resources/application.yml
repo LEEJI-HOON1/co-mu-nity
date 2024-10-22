@@ -1,6 +1,13 @@
 spring:
   application:
     name: co-mu-nity
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/co_mu_nity
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     generate-ddl: false
     hibernate:
@@ -8,5 +15,5 @@ spring:
     show-sql: true      # SQL 쿼리 출력 활성화
     properties:
       hibernate:
-        format_sql: true   # 쿼리를 보기 좋게 출력
+        format_sql: true  # 쿼리를 보기 좋게 출력
 

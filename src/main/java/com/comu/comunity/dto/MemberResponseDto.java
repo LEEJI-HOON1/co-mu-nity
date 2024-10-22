@@ -1,10 +1,14 @@
 package com.comu.comunity.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class MemberResponseDto {
     private Long id;
     private String name;

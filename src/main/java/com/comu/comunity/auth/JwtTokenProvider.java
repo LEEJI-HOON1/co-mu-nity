@@ -29,6 +29,7 @@ public class JwtTokenProvider {
     //유효시간
     private final long validityInMilliseconds = 3600000; // 1시간
 
+    //토큰생성
     public String createToken(Member member) {
         Claims claims = Jwts.claims()
                 .setSubject(member.getEmail());
@@ -44,6 +45,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    //토큰에서 이메일 추출
     public String getEmailFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
@@ -51,7 +53,7 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
-
+    //토큰검증
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
@@ -63,7 +65,7 @@ public class JwtTokenProvider {
             return false;
         }
     }
-
+    //요청에서 멤버 id 추출- Bearer 토큰 JWT를 추출 데이터베이스에서 멤버를 찾아 그 ID를 반환
     public Long getMemberId() {
         HttpServletRequest request = getCurrentHttpRequest();  // 현재 요청 객체 가져오기
         if (request != null) {
@@ -79,7 +81,7 @@ public class JwtTokenProvider {
         }
         return null;
     }
-
+    //JWT 추출- Authorization 헤더에서 Bearer 접두사를 제거하고 실제 JWT만 반환
     public String extractJwtToken(String tokenWithBearer) {
         if (tokenWithBearer != null && tokenWithBearer.startsWith("Bearer ")) {
             return tokenWithBearer.substring(7);
@@ -88,7 +90,7 @@ public class JwtTokenProvider {
         return tokenWithBearer;
     }
 
-
+    //현재 HTTP 요청 가져오기
     private HttpServletRequest getCurrentHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {

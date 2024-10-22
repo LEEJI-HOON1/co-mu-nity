@@ -13,5 +13,4 @@ public class TokenInfo {
 
     private String email;
     private String token;
-
 }
