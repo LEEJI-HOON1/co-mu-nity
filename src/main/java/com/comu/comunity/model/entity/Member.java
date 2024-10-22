@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,4 +41,12 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.All, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
      */
+
+    // A의 팔로워목록조회라서, A가 팔로우하는 followee 필드
+    @OneToMany(mappedBy = "followee")
+    private Set<Friend> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "follower")
+    private Set<Friend> followees = new HashSet<>();
+
 }
