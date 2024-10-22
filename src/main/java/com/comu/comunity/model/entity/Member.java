@@ -3,11 +3,10 @@ package com.comu.comunity.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -48,11 +47,13 @@ public class Member extends BaseEntity {
         this.birthDate = birthDate;
     }
 
-    // A의 팔로워목록조회라서, A가 팔로우하는 followee 필드
-    @OneToMany(mappedBy = "followee")
-    private Set<Friend> followers = new HashSet<>();
+    // 팔로우 (내가 추가한 사람들)
+    @OneToMany(mappedBy = "fromMember")
+    private List<Friend> followings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "follower")
-    private Set<Friend> followees = new HashSet<>();
+    // 팔로워(나를 추가한 사람들)
+    @OneToMany(mappedBy = "toMember")
+    private List<Friend> followers = new ArrayList<>();
+
 
 }
