@@ -29,13 +29,13 @@ public class CommentController {
 
 
     @PutMapping("/comments/{commentId}")
-    public Long updateComment(@PathVariable(value = "commentId") Long commentId, @RequestBody CommentRequestDto requestDto){
-        return commentService.updateComment(commentId, requestDto);
+    public Long updateComment(@PathVariable(value = "Id") Long Id, @RequestBody CommentRequestDto requestDto){
+        return commentService.updateComment(Id, requestDto);
     }
 
     @DeleteMapping("/comments/commentId")
-    public Long deleteComment(@PathVariable(value = "commentId") Long commentId){
-        return commentService.deleteComment(commentId);
+    public Long deleteComment(@PathVariable(value = "Id") Long Id){
+        return commentService.deleteComment(Id);
 
     }
 }

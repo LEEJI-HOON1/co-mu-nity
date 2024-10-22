@@ -41,19 +41,32 @@ public class CommentService {
 
     @Transactional
     
-    public Long updateComment(Long commentId, CommentRequestDto requestDto){
+    public Long updateComment(Long Id, CommentRequestDto requestDto){
         //해당 댓글이 DB에 존재하는지 확인
-        Comment comment = findComment(commentId);
+        Comment comment = findComment(Id);
         //댓글 내용 수정
         comment.update(requestDto);
         
-        return commentId;
+        return Id;
         
     }
+    public Long deleteComment(Long Id) {
 
+        //해당 댓글이 DB에 존재하는지 확인
+        Comment comment = findComment(Id);
+        // 댓글 삭제
+        commentRepository.delete(comment);
 
+        return Id;
 
-    private Comment findComment(Long commentId) {
     }
+
+
+    private Comment findComment(Long Id) {
+        return commentRepository.findById(Id).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 댓글입니다.")
+        );
+    }
+
 
 }
