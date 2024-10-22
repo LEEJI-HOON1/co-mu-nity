@@ -22,8 +22,8 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "member_id")
-    private Long memberId;
+//    @Column(name = "member_id")
+//    private Long memberId;
 
     @Column(name = "name")
     private String name;
@@ -45,7 +45,7 @@ public class Board extends BaseEntity {
     public BoardResponseDto to() {
         return new BoardResponseDto(
                 id,
-                memberId,
+//                memberId,
                 name,
                 contents,
 //                comments.stream().map(Comment::to).toList(),
