@@ -24,10 +24,8 @@ public class FriendController {
     // 팔로잉하기 (친구맺기)
     @PostMapping("/members/{fromMemberId}/follow/{toMemberId}")
     public ResponseEntity<FriendResponseDto> follow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
-        Friend followFriend = friendService.follow(fromMemberId, toMemberId);
-
-        FriendResponseDto friendResponseDto = new FriendResponseDto(followFriend.getId(), fromMemberId, toMemberId);
-        return ResponseEntity.ok(friendResponseDto);
+        FriendResponseDto followResponse = friendService.follow(fromMemberId, toMemberId);
+        return ResponseEntity.ok(followResponse);
     }
 
     // 팔로잉 목록 조회
@@ -44,6 +42,13 @@ public class FriendController {
     public ResponseEntity<List<MemberResponseDto>> getFollowers(@PathVariable Long toMemberId) {
         List<MemberResponseDto> followers = friendService.getFollowers(toMemberId);
         return ResponseEntity.ok(followers);
+    }
+
+    // 팔로우 끊기
+    @DeleteMapping("/members/{fromMemberId}/follow/{toMemberId}")
+    public ResponseEntity<FriendResponseDto> unfollow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
+        FriendResponseDto unFollowResponse = friendService.unfollow(fromMemberId, toMemberId);
+        return ResponseEntity.ok(unFollowResponse);
     }
 
 
