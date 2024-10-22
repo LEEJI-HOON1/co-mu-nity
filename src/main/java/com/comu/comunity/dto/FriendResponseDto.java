@@ -4,12 +4,15 @@ import lombok.Getter;
 
 @Getter
 public class FriendResponseDto {
-    private String message;
+    private Long id;
     private Long fromMemberId;
     private Long toMemberId;
 
-    public FriendResponseDto(String message, Long fromMemberId, Long toMemberId) {
-        this.message = message;
+    // memberResponseDtoFromMember
+    // memberResponseDtoToMember
+
+    public FriendResponseDto(Long id ,Long fromMemberId, Long toMemberId) {
+        this.id = id;
         this.fromMemberId = fromMemberId;
         this.toMemberId = toMemberId;
     }
