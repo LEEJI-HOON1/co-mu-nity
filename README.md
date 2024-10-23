@@ -23,7 +23,7 @@
 - 팔로워, 조회(전체), 삭제
 
 ## API 명세서
-https://documenter.getpostman.com/view/38711511/2sAY4rF5ht
+https://documenter.getpostman.com/view/38711511/2sAY4rFQWC
 
 
 ## ERD
