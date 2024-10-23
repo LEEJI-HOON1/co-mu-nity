@@ -23,6 +23,7 @@ public class FriendService {
     // Todo
     //  토큰생성시, fromMemberId는 로그인한 사용자로 변경해야함
     // fromMember가 toMember 팔로우
+
     @Transactional
     public FriendResponseDto follow(Long fromMemberId, Long toMemberId) {
         // 자기 자신 팔로우 안됨
