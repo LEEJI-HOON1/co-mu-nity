@@ -21,7 +21,7 @@ public class MemberService {
 
     public MemberResponseDto getMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
-        return new MemberResponseDto(member.getId(), member.getName(), member.getEmail(), member.getBirthDate());
+        return new MemberResponseDto(member);
     }
 
     @Transactional
