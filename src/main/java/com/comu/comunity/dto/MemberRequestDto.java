@@ -12,7 +12,6 @@ public class MemberRequestDto {
     private String name;
     private String email;
     private LocalDate birthDate;
-    //    비밀번호 관련 예시
     private String password;
 
 }
