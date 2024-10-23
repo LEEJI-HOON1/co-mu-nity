@@ -1,9 +1,11 @@
 package com.comu.comunity.service;
 
+import com.comu.comunity.dto.BoardListResponseDto;
 import com.comu.comunity.dto.BoardRequestDto;
 import com.comu.comunity.dto.BoardResponseDto;
 import com.comu.comunity.dto.BoardResponsePage;
 import com.comu.comunity.model.entity.Board;
+import com.comu.comunity.model.entity.Member;
 import com.comu.comunity.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,23 +26,20 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
 
-
     @Transactional
-    public BoardResponseDto createBoard(BoardRequestDto boardRequestDto) {
-        //게시글 생성
-        //Dto -> Entity
+    public BoardResponseDto createBoard(BoardRequestDto boardRequestDto, Member loginedMember) {
         Board board = Board.from(boardRequestDto);
-        //DB에 저장
+        board.setMember(loginedMember);
         Board savedBoard = boardRepository.save(board);
 
         return savedBoard.to();
     }
 
     //게시글 전체조회
-    public List<BoardResponseDto> getBoardList() {
+    public List<BoardListResponseDto> getBoardList() {
         List<Board> boards = boardRepository.findAll();
         return boards.stream()
-                .map(Board::to)
+                .map(Board::listTo)
                 .collect(Collectors.toList());
     }
 
@@ -57,15 +56,21 @@ public class BoardService {
 
     //게시글 수정
     @Transactional
-    public void updateBoard(Long id, BoardRequestDto boardRequestDto) {
+    public void updateBoard(Long id, BoardRequestDto boardRequestDto, Member loginedMember) {
         Board board = boardRepository.findBoardById(id);
+        if (!board.getMember().getId().equals(loginedMember.getId())) {
+            throw new RuntimeException("수정 권한이 없습니다.");  // 사용자 ID가 일치하지 않으면 예외 발생
+        }
         board.updateData(boardRequestDto);
     }
 
     //게시글 삭제
     @Transactional
-    public void deleteBoard(Long id) {
-        boardRepository.findBoardById(id);
+    public void deleteBoard(Long id, Member loginedMember) {
+        Board board = boardRepository.findBoardById(id);
+        if (!board.getMember().getId().equals(loginedMember.getId())) {
+            throw new RuntimeException("삭제 권한이 없습니다.");  // 사용자 ID가 일치하지 않으면 예외 발생
+        }
         boardRepository.deleteById(id);
     }
 }
