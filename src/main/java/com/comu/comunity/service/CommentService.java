@@ -38,9 +38,10 @@ public class CommentService {
     }
 
     public List<CommentResponseDto> getComment(Long boardId) {
-        List<Comment> comments = commentRepository.findAllByBoardId(boardId);
-        // DB 조회
-        return commentRepository.findAll().stream().map(CommentResponseDto::new).toList();
+        Board board = boardRepository.findBoardById(boardId);
+        return board.getComments().stream()
+                .map(CommentResponseDto::new)
+                .toList();
     }
 
     @Transactional
