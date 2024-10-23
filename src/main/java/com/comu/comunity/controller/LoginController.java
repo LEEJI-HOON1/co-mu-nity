@@ -20,10 +20,11 @@ public class LoginController {
     public MemberResponseDto register(@RequestBody MemberRequestDto memberRequestDto) {
         return memberService.register(memberRequestDto);
     }
+
     //로그인
     @PostMapping("/auth/login")
     public TokenInfo login(@RequestBody MemberRequestDto memberRequestDto) {
-        return memberService.getMemberToken(memberRequestDto.getEmail(),memberRequestDto.getPassword());
+        return memberService.getMemberToken(memberRequestDto.getEmail(), memberRequestDto.getPassword());
     }
 
 }
