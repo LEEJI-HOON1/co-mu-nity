@@ -25,21 +25,24 @@ public class FriendService {
     // fromMember가 toMember 팔로우
 
     @Transactional
-    public FriendResponseDto follow(Long fromMemberId, Long toMemberId) {
+    public FriendResponseDto follow(Member loginedMember, Long toMemberId) {
+
+        Long loginedMemberId = loginedMember.getId();
+
         // 자기 자신 팔로우 안됨
-        if (fromMemberId.equals(toMemberId)) {
+        if (loginedMemberId.equals(toMemberId)) {
             throw new RuntimeException("자기 자신을 follow 할 수 없습니다.");
         }
         // 이미 팔로우 중일때
-        if (isFollowing(fromMemberId, toMemberId)) {
+        if (isFollowing(loginedMemberId, toMemberId)) {
             throw new IllegalArgumentException("이미 follow 했습니다");
         }
-        Member fromMember = memberRepository.findById(fromMemberId).orElseThrow(RuntimeException::new);
+        Member fromMember = memberRepository.findById(loginedMemberId).orElseThrow(RuntimeException::new);
         Member toMember = memberRepository.findById(toMemberId).orElseThrow(RuntimeException::new);
 
         Friend friend = new Friend(fromMember, toMember);
         friendRepository.save(friend);
-        return new FriendResponseDto(friend.getId(), fromMemberId, toMemberId);
+        return new FriendResponseDto(friend.getId(), loginedMemberId, toMemberId);
     }
 
     public List<MemberResponseDto> getFollowings(Long fromMemberId) {
