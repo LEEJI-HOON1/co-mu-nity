@@ -5,7 +5,6 @@ import com.comu.comunity.dto.FriendResponseDto;
 import com.comu.comunity.dto.MemberResponseDto;
 import com.comu.comunity.model.entity.Member;
 import com.comu.comunity.service.FriendService;
-import com.comu.comunity.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +18,11 @@ import java.util.Objects;
 public class FriendController {
 
     private final FriendService friendService;
-
     private final JwtTokenProvider jwtTokenProvider;
 
-    // Todo
-    //  로그인기능 완료후, fromMemberId는 토큰으로 구분해주기
     // 팔로잉하기 (친구맺기)
     @PostMapping("/members/{fromMemberId}/following/{toMemberId}")
     public ResponseEntity<FriendResponseDto> follow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
-
         Member loginedMember = jwtTokenProvider.getLoginedMember();
 
         if (!Objects.equals(loginedMember.getId(), fromMemberId)) {
@@ -36,6 +31,19 @@ public class FriendController {
 
         FriendResponseDto followResponse = friendService.follow(loginedMember, toMemberId);
         return ResponseEntity.ok(followResponse);
+    }
+
+    // 팔로우 끊기
+    @DeleteMapping("/members/{fromMemberId}/follow/{toMemberId}")
+    public ResponseEntity<FriendResponseDto> unfollow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
+        Member loginedMember = jwtTokenProvider.getLoginedMember();
+
+        if (!Objects.equals(loginedMember.getId(), fromMemberId)) {
+            throw new RuntimeException("로그인한 사용자가 아닙니다.");
+        }
+
+        FriendResponseDto unFollowResponse = friendService.unfollow(loginedMember, toMemberId);
+        return ResponseEntity.ok(unFollowResponse);
     }
 
     // 팔로잉 목록 조회
@@ -52,13 +60,6 @@ public class FriendController {
     public ResponseEntity<List<MemberResponseDto>> getFollowers(@PathVariable Long toMemberId) {
         List<MemberResponseDto> followers = friendService.getFollowers(toMemberId);
         return ResponseEntity.ok(followers);
-    }
-
-    // 팔로우 끊기
-    @DeleteMapping("/members/{fromMemberId}/follow/{toMemberId}")
-    public ResponseEntity<FriendResponseDto> unfollow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
-        FriendResponseDto unFollowResponse = friendService.unfollow(fromMemberId, toMemberId);
-        return ResponseEntity.ok(unFollowResponse);
     }
 
 
