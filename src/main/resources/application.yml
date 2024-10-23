@@ -16,3 +16,4 @@ spring:
     properties:
       hibernate:
         format_sql: true  # 쿼리를 보기 좋게 출력
+

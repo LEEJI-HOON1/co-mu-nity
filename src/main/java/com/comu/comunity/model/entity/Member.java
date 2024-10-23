@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Entity
 @Getter
@@ -46,4 +49,14 @@ public class Member extends BaseEntity {
         this.email = email;
         this.birthDate = birthDate;
     }
+
+    // 팔로우 (내가 추가한 사람들)
+    @OneToMany(mappedBy = "fromMember")
+    private List<Friend> followings = new ArrayList<>();
+
+    // 팔로워(나를 추가한 사람들)
+    @OneToMany(mappedBy = "toMember")
+    private List<Friend> followers = new ArrayList<>();
+
+
 }

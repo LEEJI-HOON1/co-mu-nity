@@ -21,4 +21,9 @@ public class MemberResponseDto {
         this.email = email;
         this.birthDate = birthDate;
     }
+
+    public MemberResponseDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
