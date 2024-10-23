@@ -19,11 +19,12 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-//    @Column(name = "member_id")
-//    private Long memberId;
+    @Column(name = "member_id")
+    private Long memberId;
 
     @Column(name = "name")
     private String name;
@@ -31,13 +32,14 @@ public class Board extends BaseEntity {
     @Column(name = "contents")
     private String contents;
 
-    public static Board from(BoardRequestDto boardRequestDto) {
+    public static Board from(BoardRequestDto boardRequestDto, Member member) {
         Board board = new Board();
-        board.initData(boardRequestDto);
+        board.initData(boardRequestDto, member);
         return board;
     }
 
-    private void initData(BoardRequestDto boardRequestDto) {
+    private void initData(BoardRequestDto boardRequestDto, Member member) {
+        this.memberId = member.getId();
         this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
