@@ -32,14 +32,13 @@ public class Board extends BaseEntity {
     @Column(name = "contents")
     private String contents;
 
-    public static Board from(BoardRequestDto boardRequestDto, Member member) {
+    public static Board from(BoardRequestDto boardRequestDto) {
         Board board = new Board();
-        board.initData(boardRequestDto, member);
+        board.initData(boardRequestDto);
         return board;
     }
 
-    private void initData(BoardRequestDto boardRequestDto, Member member) {
-        this.memberId = member.getId();
+    private void initData(BoardRequestDto boardRequestDto) {
         this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
