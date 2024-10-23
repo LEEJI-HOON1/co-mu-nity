@@ -3,20 +3,24 @@ package com.comu.comunity.service;
 import com.comu.comunity.dto.CommentResponseDto;
 import com.comu.comunity.dto.CommentRequestDto;
 import com.comu.comunity.model.entity.Comment;
+import com.comu.comunity.repository.BoardRepository;
 import com.comu.comunity.repository.CommentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
 
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
+//    public CommentService(CommentRepository commentRepository) {
+//        this.commentRepository = commentRepository;
+//    }
 
 
 
