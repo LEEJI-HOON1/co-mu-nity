@@ -1,6 +1,7 @@
 package com.comu.comunity.dto;
 
 import com.comu.comunity.model.entity.Comment;
+import com.comu.comunity.model.entity.Member;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class CommentResponseDto {
     private Long id;
-    private Long memberId;
+    private Member memberId;
     private String name;
     private String contents;
 

@@ -1,6 +1,7 @@
 package com.comu.comunity.model.entity;
 
 import com.comu.comunity.dto.CommentRequestDto;
+import com.comu.comunity.dto.CommentResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,13 @@ public class Comment extends BaseEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @Column(name ="member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name ="member_id")
+    private Member memberId;
 
     @Column(name ="name")
     private String name;
@@ -38,5 +40,9 @@ public class Comment extends BaseEntity {
     public void update(CommentRequestDto requestDto) {
         this.name = requestDto.getName();
         this.contents = requestDto.getContents();
+    }
+
+    public CommentResponseDto to() {
+        return new CommentResponseDto(this);
     }
 }

@@ -20,7 +20,7 @@ public class CommentController {
 
 
 
-    @PostMapping("/comments")
+    @PostMapping("/boards/{boardId}/comments")
     public ResponseEntity<CommentResponseDto> createComment (@RequestBody CommentRequestDto requestDto){
         CommentResponseDto responseDto = commentService.createComment(requestDto);
 
@@ -29,7 +29,7 @@ public class CommentController {
 
 
     @GetMapping("/boards/{boardId}/comments")
-    public ResponseEntity<List<CommentResponseDto>> getComment(@PathVariable Long boardId ) {
+    public ResponseEntity<List<CommentResponseDto>> getComment(@PathVariable("boardId") Long boardId ) {
         List<CommentResponseDto> responseDtoList = commentService.getComment(boardId);
 
 
@@ -39,13 +39,13 @@ public class CommentController {
 
 
     @PutMapping("/boards/{boardId}/comments/{commentId}")
-    public ResponseEntity<Long> updateComment(@PathVariable(value = "commentId") Long commentId, @RequestBody CommentRequestDto requestDto){
+    public ResponseEntity<Long> updateComment(@PathVariable(name="commentId", value = "commentId") Long commentId, @RequestBody CommentRequestDto requestDto){
         Long updatedCommentId = commentService.updateComment(commentId, requestDto);
         return ResponseEntity.ok(updatedCommentId);
     }
 
     @DeleteMapping("/boards/{boardId}/comments/{commentId}")
-    public ResponseEntity<Long> deleteComment(@PathVariable(value = "commentId") Long commentId) {
+    public ResponseEntity<Long> deleteComment(@PathVariable(name="commentId", value = "commentId") Long commentId) {
         Long deletedCommentId = commentService.deleteComment(commentId);
 
         return ResponseEntity.ok(deletedCommentId);
