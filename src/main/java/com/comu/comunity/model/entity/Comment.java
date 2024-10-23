@@ -37,12 +37,12 @@ public class Comment extends BaseEntity {
 
 
     public  Comment(CommentRequestDto requestDto) {
-        this.name = requestDto.getName();
+        this.memberName = requestDto.getName();
         this.contents = requestDto.getContents();
     }
 
     public void update(CommentRequestDto requestDto) {
-        this.name = requestDto.getName();
+        this.memberName = requestDto.getName();
         this.contents = requestDto.getContents();
     }
 
