@@ -24,28 +24,7 @@
 - 팔로워, 조회(전체), 삭제
 
 ## API 명세서
-- POST 회원가입
-  - https://postman-rest-api-learner.glitch.me//info
-- POST 로그인
-  -  https://postman-rest-api-learner.glitch.me//info
-- PUT 게시글 수정
-  -  https://postman-rest-api-learner.glitch.me//info?id=1
-- DELETE 게시글 삭제
-  -  https://postman-rest-api-learner.glitch.me//info?id=1
-- POST 게시글 생성
-  -  https://postman-rest-api-learner.glitch.me//info
--  GET 게시글 조회
-  -  http://localhost:8080/api/boards
--  GET 게시글 상세 조회
-  -  http://localhost:8080/api/boards/3
--  POST 댓글 생성
-  -  https://postman-rest-api-learner.glitch.me//info
--  GET 댓글 조회
-  -  http://localhost:8080/api/boards/4/comments
--  PUT 댓글 수정
-  -  http://localhost:8080/api/boards/4/comments
--  DELETE 댓글 삭제
-  -  http://localhost:8080/api/boards/4/comments
+https://documenter.getpostman.com/view/38711511/2sAY4rF5ht
 
 
 ## ERD
