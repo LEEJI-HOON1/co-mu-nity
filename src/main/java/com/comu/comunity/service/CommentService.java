@@ -27,10 +27,13 @@ public class CommentService {
         Long loginedMemberId = loginedMember.getId();
         String loginedMemberName= loginedMember.getName();
 
-        boardRepository.findById(boardId)
+        Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
         Comment comment = new Comment(requestDto);
 
+        comment.setMemberId(loginedMemberId);
+        comment.setMemberName(loginedMemberName);
+        comment.setBoard(board);
         // DB 저장
         Comment saveComment = commentRepository.save(comment);
 
@@ -47,7 +50,7 @@ public class CommentService {
     }
 
     @Transactional
-    
+
     public Long updateComment(Long commentId, CommentRequestDto requestDto, Member loginedMember){
 
         Long loginedMemberId = loginedMember.getId();
