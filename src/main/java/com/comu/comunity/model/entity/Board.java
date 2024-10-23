@@ -6,6 +6,7 @@ import com.comu.comunity.dto.BoardResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,12 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
 
+    @Setter
+    @Column
+    private Long memberId;
+
+    @Setter
     @Column(name = "name")
     private String name;
 
@@ -39,9 +42,6 @@ public class Board extends BaseEntity {
         return board;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
 
     private void initData(BoardRequestDto boardRequestDto) {
         this.contents = boardRequestDto.getContents();
@@ -50,8 +50,8 @@ public class Board extends BaseEntity {
     public BoardResponseDto to() {
         return new BoardResponseDto(
                 id,
-                member.getId(),
-                member.getName(),
+                memberId,
+                name,
                 contents,
                 comments.stream().map(Comment::to).toList(),
                 getCreateDate(),
@@ -62,8 +62,8 @@ public class Board extends BaseEntity {
     public BoardListResponseDto listTo() {
         return new BoardListResponseDto(
                 id,
-                member.getId(),
-                member.getName(),
+                memberId,
+                name,
                 contents,
                 getCreateDate(),
                 getUpdateDate()
