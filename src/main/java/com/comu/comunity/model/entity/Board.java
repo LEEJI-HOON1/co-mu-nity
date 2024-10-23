@@ -19,11 +19,12 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-//    @Column(name = "member_id")
-//    private Long memberId;
+    @Column(name = "member_id")
+    private Long memberId;
 
     @Column(name = "name")
     private String name;
