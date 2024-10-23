@@ -23,14 +23,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         if (requestURI.contains("/api")) {
-            // heade 에서 토큰정보 추출
-            // 토큰 꺼내
+
             String token = jwtTokenProvider.extractJwtToken(request.getHeader("Authorization"));
 
-            // 맞는 토큰이야?
             if (jwtTokenProvider.validateToken(token)) {
                 filterChain.doFilter(request, response);
-            } else { // 아니네?
+            } else {
                 extracted(response);
             }
         }

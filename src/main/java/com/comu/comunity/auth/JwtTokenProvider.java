@@ -22,7 +22,6 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final MemberRepository memberRepository;
-
 //토큰과 관련된 기능 틀래스
 
     //토크을 가지오 오는 키
@@ -55,6 +54,7 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
+
     //토큰검증
     public boolean validateToken(String token) {
         try {
@@ -67,6 +67,7 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
     //요청에서 멤버 추출- Bearer 토큰 JWT를 추출 데이터베이스에서 멤버를 찾아 그 ID를 반환
     public Member getLoginedMember() {
         HttpServletRequest request = getCurrentHttpRequest();  // 현재 요청 객체 가져오기
@@ -74,14 +75,15 @@ public class JwtTokenProvider {
             String bearerToken = request.getHeader("Authorization");
             if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
                 String token = extractJwtToken(bearerToken);
-                 String email = getEmailFromToken(token);  // 토큰에서 이메일 추출
+                String email = getEmailFromToken(token);  // 토큰에서 이메일 추출
 
                 return memberRepository.findByEmail(email)
-                         .orElseThrow(() -> new RuntimeException("member not found"));
+                        .orElseThrow(() -> new RuntimeException("member not found"));
             }
         }
         return null;
     }
+
     //JWT 추출- Authorization 헤더에서 Bearer 접두사를 제거하고 실제 JWT만 반환
     public String extractJwtToken(String tokenWithBearer) {
         if (tokenWithBearer != null && tokenWithBearer.startsWith("Bearer ")) {
