@@ -1,5 +1,4 @@
-# CO-MU-NITY 
-# 일정 관리 앱 2
+# CO-MU-NITY
 ## 기능목록
 - 모든 테이블은 고유 식별자(ID)를 가진다
 - `3 Layer Architecture` 에 따라 각 Layer의 목적에 맞게 개발
