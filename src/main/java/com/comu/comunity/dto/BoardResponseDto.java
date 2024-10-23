@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardResponseDto {
     private long id;
+    private String name;
 //    private long memberId;
     private String contents;
 //    private List<CommentResponseDto> comment;

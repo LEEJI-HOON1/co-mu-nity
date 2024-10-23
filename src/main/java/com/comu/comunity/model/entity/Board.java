@@ -19,12 +19,15 @@ public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member memberId;
+    @Column(name = "member_id")
+    private Long memberId;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "contents")
     private String contents;
@@ -36,14 +39,15 @@ public class Board extends BaseEntity {
     }
 
     private void initData(BoardRequestDto boardRequestDto) {
-//        this.memberId = new Member();
+        this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
 
     public BoardResponseDto to() {
         return new BoardResponseDto(
                 id,
-//                this.memberId.getName(),
+//                memberId,
+                name,
                 contents,
 //                comments.stream().map(Comment::to).toList(),
                 getCreateDate(),
@@ -52,6 +56,7 @@ public class Board extends BaseEntity {
     }
 
     public void updateData(BoardRequestDto boardRequestDto) {
+        this.name = boardRequestDto.getName();
         this.contents = boardRequestDto.getContents();
     }
 }
