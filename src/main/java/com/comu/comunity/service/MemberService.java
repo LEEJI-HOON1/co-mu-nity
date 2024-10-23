@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -27,35 +28,31 @@ public class MemberService {
     public void updateMember(Long id, MemberRequestDto memberRequestDto) {
         Member member = memberRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
-
-        // 비밀번호 관련 로직은 JWT 토큰 및 PasswordEncoder에
+        member.updateProfile(memberRequestDto.getName(), memberRequestDto.getEmail(), memberRequestDto.getBirthDate());
     }
 
     @Transactional
     public void deleteMember(Long id, String password) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
-
-        // ... 비밀번호 관련 로직은 JWT 토큰 및 PasswordEncoder..?
-
         memberRepository.delete(member);
     }
 
 
-//         회원가입
-        public MemberResponseDto register(MemberRequestDto memberRequestDto) {
-            // Member 객체 생성 및 필드 설정
-            Member member = new Member();
-            member.setName(memberRequestDto.getName());
-            member.setEmail(memberRequestDto.getEmail());
-            member.setPassword(memberRequestDto.getPassword()); // 비밀번호 암호화 제외
-            Member savedMember = memberRepository.save(member);
+    //         회원가입
+    public MemberResponseDto register(MemberRequestDto memberRequestDto) {
+        // Member 객체 생성 및 필드 설정
+        Member member = new Member();
+        member.setName(memberRequestDto.getName());
+        member.setEmail(memberRequestDto.getEmail());
+        member.setPassword(memberRequestDto.getPassword()); // 비밀번호 암호화 제외
+        Member savedMember = memberRepository.save(member);
 
-            MemberResponseDto saveDto = new MemberResponseDto();
-            saveDto.setEmail(savedMember.getEmail());
-            saveDto.setName(savedMember.getName());
-            saveDto.setBirthDate(savedMember.getBirthDate());
-            return saveDto;
-        }
+        MemberResponseDto saveDto = new MemberResponseDto();
+        saveDto.setEmail(savedMember.getEmail());
+        saveDto.setName(savedMember.getName());
+        saveDto.setBirthDate(savedMember.getBirthDate());
+        return saveDto;
+    }
 
     //로그인
     public TokenInfo getMemberToken(String email, String password) {

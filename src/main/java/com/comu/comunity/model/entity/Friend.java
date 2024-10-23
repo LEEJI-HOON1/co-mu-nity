@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,15 +12,24 @@ public class Friend extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "follow_id")
     private Long id;
 
-    @Column(name = "followeeId")
-    private Long followeeId;
+    // 팔로우 요청 하는 사람 fromMember
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "from_member")
+    private Member fromMember;
 
-    @Column(name = "followerId")
-    private Long followerId;
+    // 팔로우 요청 받는 사람 toMember
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_member")
+    private Member toMember;
 
     @Column
     private String status;
 
+    public Friend(Member fromMember, Member toMember) {
+        this.fromMember = fromMember;
+        this.toMember = toMember;
+    }
 }
