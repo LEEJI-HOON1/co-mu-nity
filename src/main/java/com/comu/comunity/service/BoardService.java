@@ -29,7 +29,10 @@ public class BoardService {
     @Transactional
     public BoardResponseDto createBoard(BoardRequestDto boardRequestDto, Member loginedMember) {
         Board board = Board.from(boardRequestDto);
-        board.setMember(loginedMember);
+        Long loginedMemberId = loginedMember.getId();
+        String loginedMemberName = loginedMember.getName();
+        board.setMemberId(loginedMemberId);
+        board.setName(loginedMemberName);
         Board savedBoard = boardRepository.save(board);
 
         return savedBoard.to();
@@ -58,7 +61,7 @@ public class BoardService {
     @Transactional
     public void updateBoard(Long id, BoardRequestDto boardRequestDto, Member loginedMember) {
         Board board = boardRepository.findBoardById(id);
-        if (!board.getMember().getId().equals(loginedMember.getId())) {
+        if (!board.getMemberId().equals(loginedMember.getId())) {
             throw new RuntimeException("수정 권한이 없습니다.");  // 사용자 ID가 일치하지 않으면 예외 발생
         }
         board.updateData(boardRequestDto);
@@ -68,7 +71,7 @@ public class BoardService {
     @Transactional
     public void deleteBoard(Long id, Member loginedMember) {
         Board board = boardRepository.findBoardById(id);
-        if (!board.getMember().getId().equals(loginedMember.getId())) {
+        if (!board.getMemberId().equals(loginedMember.getId())) {
             throw new RuntimeException("삭제 권한이 없습니다.");  // 사용자 ID가 일치하지 않으면 예외 발생
         }
         boardRepository.deleteById(id);
