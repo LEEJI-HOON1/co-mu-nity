@@ -29,41 +29,42 @@ public class CommentService {
         Comment saveComment = commentRepository.save(comment);
 
         // Entity -> ResponseDto
-        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-        return commentResponseDto;
+        return new CommentResponseDto(saveComment);
 
     }
 
-    public List<CommentResponseDto> getComment() {
+    public List<CommentResponseDto> getComment(Long boardId) {
+        List<Comment> comments = commentRepository.findAllByBoardId(boardId);
         // DB 조회
         return commentRepository.findAll().stream().map(CommentResponseDto::new).toList();
     }
 
     @Transactional
     
-    public Long updateComment(Long id, CommentRequestDto requestDto){
+    public Long updateComment(Long commentId, CommentRequestDto requestDto){
         //해당 댓글이 DB에 존재하는지 확인
-        Comment comment = findComment(id);
+        Comment comment = findComment(commentId);
         //댓글 내용 수정
         comment.update(requestDto);
         
-        return id;
+        return commentId;
+
         
     }
-    public Long deleteComment(Long id) {
+    public Long deleteComment(Long commentId) {
 
         //해당 댓글이 DB에 존재하는지 확인
-        Comment comment = findComment(id);
+        Comment comment = findComment(commentId);
         // 댓글 삭제
         commentRepository.delete(comment);
 
-        return id;
+        return commentId;
 
     }
 
 
-    private Comment findComment(Long id) {
-        return commentRepository.findById(id).orElseThrow(() ->
+    private Comment findComment(Long commentId) {
+        return commentRepository.findById(commentId).orElseThrow(() ->
                 new IllegalArgumentException("존재하지 않는 댓글입니다.")
         );
     }
