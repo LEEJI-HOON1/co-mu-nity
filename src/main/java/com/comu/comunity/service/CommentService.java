@@ -2,8 +2,10 @@ package com.comu.comunity.service;
 
 import com.comu.comunity.dto.CommentResponseDto;
 import com.comu.comunity.dto.CommentRequestDto;
+import com.comu.comunity.model.entity.Board;
 import com.comu.comunity.model.entity.Comment;
 import com.comu.comunity.repository.BoardRepository;
+import com.comu.comunity.model.entity.Member;
 import com.comu.comunity.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,15 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
 
-//    public CommentService(CommentRepository commentRepository) {
-//        this.commentRepository = commentRepository;
-//    }
 
 
+    public CommentResponseDto createComment(Long boardId, CommentRequestDto requestDto, Member loginedMember) {
 
-    public CommentResponseDto createComment(CommentRequestDto requestDto) {
+        Long loginedMemberId = loginedMember.getId();
+        String loginedMemberName= loginedMember.getName();
 
-        // RequestDto -> Entity
+        boardRepository.findById(boardId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
         Comment comment = new Comment(requestDto);
 
         // DB 저장
@@ -46,21 +48,38 @@ public class CommentService {
 
     @Transactional
     
-    public Long updateComment(Long commentId, CommentRequestDto requestDto){
-        //해당 댓글이 DB에 존재하는지 확인
-        Comment comment = findComment(commentId);
-        //댓글 내용 수정
-        comment.update(requestDto);
-        
+    public Long updateComment(Long commentId, CommentRequestDto requestDto, Member loginedMember){
+
+        Long loginedMemberId = loginedMember.getId();
+        String loginedMemberName = loginedMember.getName();
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("해당 댓글은 존재하지 않습니다."));
+
+        if(!comment.getMemberId().equals(loginedMemberId)){
+            throw new RuntimeException("권한이 없습니다.");
+        }
+
+        comment.setContents(requestDto.getContents());
+        comment.setMemberName(loginedMemberName); // 필요한 경우 업데이트
+        commentRepository.save(comment);
+
         return commentId;
 
-        
-    }
-    public Long deleteComment(Long commentId) {
 
-        //해당 댓글이 DB에 존재하는지 확인
-        Comment comment = findComment(commentId);
-        // 댓글 삭제
+    }
+    public Long deleteComment(Long commentId, Member loginedMember) {
+
+        Long loginedMemberId = loginedMember.getId();
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글은 존재하지 않습니다."));
+
+        if (!comment.getMemberId().equals(loginedMemberId)) {
+            throw new RuntimeException("권한이 없습니다.");
+        }
+
+        //댓글 삭제
         commentRepository.delete(comment);
 
         return commentId;
