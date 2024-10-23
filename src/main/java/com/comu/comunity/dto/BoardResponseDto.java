@@ -16,6 +16,4 @@ public class BoardResponseDto {
 //    private List<CommentResponseDto> comment;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-
-
 }
