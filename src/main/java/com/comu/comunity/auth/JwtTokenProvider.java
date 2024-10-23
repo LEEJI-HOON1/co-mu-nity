@@ -65,18 +65,17 @@ public class JwtTokenProvider {
             return false;
         }
     }
-    //요청에서 멤버 id 추출- Bearer 토큰 JWT를 추출 데이터베이스에서 멤버를 찾아 그 ID를 반환
-    public Long getMemberId() {
+    //요청에서 멤버 추출- Bearer 토큰 JWT를 추출 데이터베이스에서 멤버를 찾아 그 ID를 반환
+    public Member getLoginedMember() {
         HttpServletRequest request = getCurrentHttpRequest();  // 현재 요청 객체 가져오기
         if (request != null) {
             String bearerToken = request.getHeader("Authorization");
             if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
                 String token = extractJwtToken(bearerToken);
                  String email = getEmailFromToken(token);  // 토큰에서 이메일 추출
-               Member member =  memberRepository.findByEmail(email)
-                        .orElseThrow(() -> new RuntimeException("member not found"));
 
-                return member.getId();
+                return memberRepository.findByEmail(email)
+                         .orElseThrow(() -> new RuntimeException("member not found"));
             }
         }
         return null;
