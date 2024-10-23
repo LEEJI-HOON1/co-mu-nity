@@ -5,6 +5,7 @@ import com.comu.comunity.dto.CommentResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -21,24 +22,27 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @ManyToOne
-    @JoinColumn(name ="member_id")
-    private Member memberId;
 
-    @Column(name ="name")
-    private String name;
+    @Setter
+    @Column(name ="member_id")
+    private Long memberId;
 
+    @Setter
+    @Column(name ="member_name")
+    private String memberName;
+
+    @Setter
     @Column(name = "contents")
     private String contents;
 
 
     public  Comment(CommentRequestDto requestDto) {
-        this.name = requestDto.getName();
+        this.memberName = requestDto.getName();
         this.contents = requestDto.getContents();
     }
 
     public void update(CommentRequestDto requestDto) {
-        this.name = requestDto.getName();
+        this.memberName = requestDto.getName();
         this.contents = requestDto.getContents();
     }
 
