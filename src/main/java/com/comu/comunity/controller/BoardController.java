@@ -2,15 +2,13 @@ package com.comu.comunity.controller;
 
 import com.comu.comunity.dto.BoardRequestDto;
 import com.comu.comunity.dto.BoardResponseDto;
-import com.comu.comunity.service.BoardService;
 import com.comu.comunity.dto.BoardResponsePage;
+import com.comu.comunity.service.BoardService;
 import com.comu.comunity.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
