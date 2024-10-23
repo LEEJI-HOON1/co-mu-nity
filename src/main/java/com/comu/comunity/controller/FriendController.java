@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +20,21 @@ public class FriendController {
 
     private final FriendService friendService;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     // Todo
     //  로그인기능 완료후, fromMemberId는 토큰으로 구분해주기
     // 팔로잉하기 (친구맺기)
     @PostMapping("/members/{fromMemberId}/following/{toMemberId}")
     public ResponseEntity<FriendResponseDto> follow(@PathVariable Long fromMemberId, @PathVariable Long toMemberId) {
 
+        Member loginedMember = jwtTokenProvider.getLoginedMember();
 
-        FriendResponseDto followResponse = friendService.follow(fromMemberId, toMemberId);
+        if (!Objects.equals(loginedMember.getId(), fromMemberId)) {
+            throw new RuntimeException("로그인한 사용자가 아닙니다.");
+        }
+
+        FriendResponseDto followResponse = friendService.follow(loginedMember, toMemberId);
         return ResponseEntity.ok(followResponse);
     }
 
