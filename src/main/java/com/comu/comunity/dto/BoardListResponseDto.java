@@ -8,12 +8,11 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class BoardResponseDto {
+public class BoardListResponseDto {
     private long id;
     private long memberId;
     private String name;
     private String contents;
-    private List<CommentResponseDto> comment;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 }
