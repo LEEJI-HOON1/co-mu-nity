@@ -22,9 +22,7 @@ public class FriendService {
 
     @Transactional
     public FriendResponseDto follow(Member loginedMember, Long toMemberId) {
-
         Long loginedMemberId = loginedMember.getId();
-
         // 자기 자신 팔로우 안됨
         if (loginedMemberId.equals(toMemberId)) {
             throw new RuntimeException("자기 자신을 follow 할 수 없습니다.");
@@ -33,11 +31,23 @@ public class FriendService {
         if (isFollowing(loginedMemberId, toMemberId)) {
             throw new IllegalArgumentException("이미 follow 했습니다");
         }
-        Member fromMember = memberRepository.findById(loginedMemberId).orElseThrow(RuntimeException::new);
-        Member toMember = memberRepository.findById(toMemberId).orElseThrow(RuntimeException::new);
+//        Member fromMember = memberRepository.findById(loginedMemberId)
+//                .orElseThrow(RuntimeException::new);
+        // 팔로우 대상 회원 조회
+        Member toMember = memberRepository.findById(toMemberId)
+                .orElseThrow(RuntimeException::new);
 
-        Friend friend = new Friend(fromMember, toMember);
+        Friend friend = new Friend(loginedMember, toMember);
+        loginedMember.addFollowing(friend);
+        toMember.addFollower(friend);
+
         friendRepository.save(friend);
+
+        // follower 및 following 수치 업데이트
+        // Drity Checking에 의해 tx 종료 시 자동으로 업데이트 됨
+//        fromMember.setFollowing(fromMember.getFollowing() + 1);
+//        toMember.setFollowing(toMember.getFollower() + 1);
+
         return new FriendResponseDto(friend.getId(), loginedMemberId, toMemberId);
     }
 
