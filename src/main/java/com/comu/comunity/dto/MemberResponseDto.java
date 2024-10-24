@@ -1,5 +1,6 @@
 package com.comu.comunity.dto;
 
+import com.comu.comunity.model.entity.Friend;
 import com.comu.comunity.model.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,6 @@ public class MemberResponseDto {
     private LocalDate birthDate;
     private int follower;
     private int following;
-
-    public MemberResponseDto(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public MemberResponseDto(Member member) {
         this.id = member.getId();

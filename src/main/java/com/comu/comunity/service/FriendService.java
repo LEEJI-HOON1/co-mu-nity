@@ -1,6 +1,7 @@
 package com.comu.comunity.service;
 
 import com.comu.comunity.dto.FriendResponseDto;
+import com.comu.comunity.dto.MemberFollowResponse;
 import com.comu.comunity.dto.MemberResponseDto;
 import com.comu.comunity.model.entity.Friend;
 import com.comu.comunity.model.entity.Member;
@@ -66,24 +67,24 @@ public class FriendService {
         return new FriendResponseDto(friend.getId(), loginedMemberId, toMemberId);
     }
 
-    public List<MemberResponseDto> getFollowings(Long fromMemberId) {
+    public List<MemberFollowResponse> getFollowings(Long fromMemberId) {
         // 해당 멤버가 존재하는지 확인
         memberRepository.findById(fromMemberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         List<Friend> followings = friendRepository.findByFromMemberId(fromMemberId);
         return followings.stream()
-                .map(friend -> new MemberResponseDto(friend.getToMember().getId(), friend.getToMember().getName()))
+                .map(MemberFollowResponse::new)
                 .collect(Collectors.toList());
     }
 
-    public List<MemberResponseDto> getFollowers(Long toMemberId) {
+    public List<MemberFollowResponse> getFollowers(Long toMemberId) {
         memberRepository.findById(toMemberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         List<Friend> followers = friendRepository.findByToMemberId(toMemberId);
         return followers.stream()
-                .map(friend -> new MemberResponseDto(friend.getFromMember().getId(), friend.getFromMember().getName()))
+                .map(friend -> new MemberFollowResponse(friend.getFromMember().getId(), friend.getFromMember().getName()))
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,7 @@ package com.comu.comunity.controller;
 
 import com.comu.comunity.auth.JwtTokenProvider;
 import com.comu.comunity.dto.FriendResponseDto;
+import com.comu.comunity.dto.MemberFollowResponse;
 import com.comu.comunity.dto.MemberResponseDto;
 import com.comu.comunity.model.entity.Member;
 import com.comu.comunity.service.FriendService;
@@ -49,16 +50,16 @@ public class FriendController {
     // 팔로잉 목록 조회
     // fromMember의 toMember 리스트를 조회한다.
     @GetMapping("/followings/{fromMemberId}")
-    public ResponseEntity<List<MemberResponseDto>> getFollowings(@PathVariable Long fromMemberId) {
-        List<MemberResponseDto> followings = friendService.getFollowings(fromMemberId);
+    public ResponseEntity<List<MemberFollowResponse>> getFollowings(@PathVariable Long fromMemberId) {
+        List<MemberFollowResponse> followings = friendService.getFollowings(fromMemberId);
         return ResponseEntity.ok(followings);
     }
 
     // 팔로워 목록 조회
     // toMember의 fromMember 리스트를 찾는다
     @GetMapping("/followers/{toMemberId}")
-    public ResponseEntity<List<MemberResponseDto>> getFollowers(@PathVariable Long toMemberId) {
-        List<MemberResponseDto> followers = friendService.getFollowers(toMemberId);
+    public ResponseEntity<List<MemberFollowResponse>> getFollowers(@PathVariable Long toMemberId) {
+        List<MemberFollowResponse> followers = friendService.getFollowers(toMemberId);
         return ResponseEntity.ok(followers);
     }
 
