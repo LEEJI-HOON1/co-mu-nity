@@ -45,6 +45,7 @@ public class MemberService {
         Member member = new Member();
         member.setName(memberRequestDto.getName());
         member.setEmail(memberRequestDto.getEmail());
+        member.setBirthDate(memberRequestDto.getBirthDate());
         member.setPassword(passwordEncryptor.encryptPassword(memberRequestDto.getPassword())); // 비밀번호 암호화 제외
         Member savedMember = memberRepository.save(member);
 
